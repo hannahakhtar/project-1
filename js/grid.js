@@ -7,6 +7,7 @@ const cells = []
 let displayAliens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
 let direction = 1
 const aliensMoving = false
+const laserShot = false
 let makeAliensMove = null
 let playerStart = 388
 let laserPosition = playerStart
@@ -51,10 +52,25 @@ startButton.addEventListener('click', () => {
       playerStart += 1
       cells[playerStart].classList.add('gun')
     } else if (key === 'ArrowUp') {
+      // playerShoots()
       playerShoots()
-      console.log('work please')
+      
     }
   })
+  
+  function playerShoots() {
+    const laserArray = []
+    for (let i = 0; i < width; i++) {
+      laserArray.push(laserPosition -= width)
+    }
+    console.log(laserArray)
+    for (let i = 0; i < laserArray.length - 1; i++) {
+      const gridReference = document.getElementById(`cell-${laserArray[i]}`)
+      gridReference.classList.add('laser')
+    }
+  }
+
+
 
   // when user clicks to restart game - needs updating, not currently working
   resetButton.addEventListener('click', () => {
@@ -106,47 +122,123 @@ function aliensMove() {
   }
 }
 
-function playerShoots() {
-  
-  const laserPosWhenPlayerShoots = playerStart - width
-  const currentLaserPosition = document.getElementById(`cell-${laserPosWhenPlayerShoots}`)
-  currentLaserPosition.classList.add('laser')
-  checkCollision(laserPosWhenPlayerShoots)
+// let currentLaserPosition = playerStart - width
+// let currentLaserPositionRef = document.getElementById(`cell-${currentLaserPosition}`)
+// let laserArray = []
+
+// for (let i = 1; i < width; i++) {
+//   laserArray.push(currentLaserPosition)
+// }
+
+
+
+
+
+// laserArray.forEach(element => {
+//   element.classList.add('laser')
+
+// })
+
+// const alienMoving = setInterval( , 600)
+
+
+
+
+
+
+
+
+// function laserMovement() {
+
+//   removeLaserClass() 
+
+
+
+//   addLaserClass()
+
+// }
+
+
+// function removeLaserClass() {
+//   laserArray.forEach((square) => {
+//     cells[square].classList.remove('laser')
+//   })
+// }
+
+// function updateLaserClass() {
+//   laserArray.forEach((square) => {
+//     cells[square].classList.add('laser')
+//   })
+// }
+
+// function laserMove() {
+//   if (laserShot === false) {
+//     makeLasersMove = setInterval(laserMovement, 600)
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // currentLaserPosition.classList.add('laser')
+  // checkCollision(laserPosWhenPlayerShoots)
   // change background colour to red(add/remove class) 
-   
-  
-  
-  
-  // let laserRow = laserPosWhenPlayerShoots
-  // const laserRowArray = []
-
-  // for (let i = 1; i < height - 1; i++) {
-  //   laserRowArray.push(laserRow -= 20)
-  // }
-
-  // if (!laserRow.contains('laser')) {
-  //   cells[laserRow].classList.add('laser')
-  // }
-
-  // function laserMovement() {
-  //   laserRowArray[laserRow].classList.remove('laser')
-  //   laserRow++
-  //   laserRowArray[laserRow].classList.add('laser')
-  // }
-
-}
+  // while (currentLaserPosition > 0) {
+  //   currentLaserPositionRef.classList.remove('laser')
+  //   currentLaserPosition = currentLaserPosition - width
+  //   currentLaserPositionRef = document.getElementById(`cell-${currentLaserPosition}`)
+  //   console.log(currentLaserPosition)
+  //   currentLaserPosition.classList.add('laser')
+  //   console.log("current pos", currentLaserPosition)
+  //   console.log("current ref", currentLaserPositionRef)
+  //   checkCollision()
+  // } 
 
 
+// function checkCollision() {
 
-
-function checkCollision (laserPosWhenPlayerShoots) {
- 
-  const currentLaserPosition = document.getElementById(`cell-${laserPosWhenPlayerShoots}`)
-  if (currentLaserPosition.classList.contains('alien') && currentLaserPosition.classList.contains('laser')) {
-    console.log('we collide')
-    // remove alien from that ID
-    // increase points by 100
-  } else {
-    console.log('we dont')
-  }
-}
+//   if (currentLaserPositionRef.classList.contains('alien') && currentLaserPositionRef.classList.contains('laser')) {
+//     console.log('we collide')
+//     // remove alien from that ID
+//     // increase points by 100
+//   } else {
+//     console.log('we dont')
+//   }
