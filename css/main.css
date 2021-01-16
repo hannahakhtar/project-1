@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+ }
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+#button_div {
+    margin: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 10px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+  width: 600px;
+  height: 600px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+aside {
+  margin-left: 20px;
+}
+
+.rules {
+  border: 1px solid green;
+  width: 200px;
+  height: 400px;
+  font-size: 25px;
+}
+
+.cell {
+  border: 1px solid green;
+  font-size: 25px;
+}
+
+.alien {
+  background-color:blue;
+  background-size: contain;
+}
+
+.gun {
+  background-color: red;
+  background-size: contain;
+}
+
+.laser {
+  background-color: orange;
+}
+
+.bomb {
+  background-color: purple;
+}
+
+
