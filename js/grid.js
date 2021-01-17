@@ -1,6 +1,5 @@
 
 const width = 20
-const height = 20
 const cells = []
 let displayAliens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
 let playerStart = 388
@@ -20,14 +19,13 @@ const resetButton = document.querySelector('#reset')
 // let laserPosition = playerStart
 
 // create grid
-for (let index = 0; index < width * height; index++) {
+for (let index = 0; index < width * width; index++) {
   const cell = document.createElement('div')
   cell.classList.add('cell')
   grid.appendChild(cell)
   cells.push(cell)
   cell.innerHTML = index
   cell.style.width = `${100 / width}%`
-  cell.style.height = `${100 / height}%`
   // cell.setAttribute('id', `cell-${index}`)
 }
 
@@ -39,16 +37,17 @@ startButton.addEventListener('click', () => {
   displayAliens.forEach(alien => {
     cells[alien].classList.add('alien')
   })
-  
+
   aliensMove()
-  randomBomb()
-  startBomb()
+  // randomBomb()
+  // startBomb()
 
   // when player clicks arrows to move
   document.addEventListener('keydown', (event) => {
     const key = event.key
 
     if (key === 'ArrowLeft' && !(playerStart % width === 0)) {
+      console.log('hello)')
       cells[playerStart].classList.remove('gun')
       playerStart -= 1
       cells[playerStart].classList.add('gun')
@@ -57,27 +56,36 @@ startButton.addEventListener('click', () => {
       playerStart += 1
       cells[playerStart].classList.add('gun')
     } else if (key === 'ArrowUp') {
-      let laserPosition = playerStart - 20
+
+      // let laserPosition = playerStart - 20
       // not currently working - review
-      
-      for (let i = 0; i < 20; i++) {
-        // const gridReference = document.getElementById(`cell-${laserPosition}`)
-        // setInterval((function turnOnLaser() {
-        //   gridReference.classList.add('laser')
-        //   console.log('here', gridReference)
 
-        // }), 2000)
-        // clearInterval()
-        // setInterval((function turnOffLaser() {
-        //   gridReference.classList.remove('laser')
-        //   console.log('this', gridReference)
+      // for (let i = 0; i < 20; i++) {
+      // const gridReference = document.getElementById(`cell-${laserPosition}`)
+      // setInterval((function turnOnLaser() {
+      //   gridReference.classList.add('laser')
+      //   console.log('here', gridReference)
 
-        // }), 5000)
-        // clearInterval()
-        // laserPosition = laserPosition - width
-      }
+      // }), 2000)
+      // clearInterval()
+      // setInterval((function turnOffLaser() {
+      //   gridReference.classList.remove('laser')
+      //   console.log('this', gridReference)
+
+      // }), 5000)
+      // clearInterval()
+      // laserPosition = laserPosition - width
+      // }
     }
   })
+
+  // if (displayLives.innerHTML === 0 || displayAliens[0] === 380) {
+  //   gameOver()
+  // } else if (cells.classList.contains('bomb') && cells.classList.contains('playerStart')) {
+  //   displayLives.innerHTML -= 1
+  // } else if (cells.classList.contains('alien') && cells.classList.contains('laser')) {
+  //   displayPoints.innerHTML += 100
+  // }
 
   // when user clicks to restart game - needs updating, not currently working
   resetButton.addEventListener('click', () => {
@@ -137,14 +145,14 @@ function randomBomb() {
 
   if (cells[bombStartPosition] > 399) {
     clearInterval(initialBombPosition)
-  } 
+  }
 }
 
 const initialBombPosition = setInterval(randomBomb, 2000)
 
 // function and interval for dropping bomb
 function startBomb() {
-  // not logging bombStartPosition - review 
+  // not logging bombStartPosition. When added as a parameter, still not defined. 
   console.log(bombStartPosition)
   cells[bombStartPosition].classList.remove('bomb')
   bombStartPosition += 20
@@ -156,3 +164,8 @@ function startBomb() {
 }
 
 const bombDropping = setInterval(startBomb, 2100)
+
+function gameOver() {
+  alert(`Game Over! Your final score was ${displayPoints}`)
+}
+
