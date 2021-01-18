@@ -6,17 +6,17 @@ let playerStart = 388
 let direction = 1
 const aliensMoving = false
 const laserShot = false
+let bombMoving = false
+let bombInitiated = false
 let makeAliensMove = null
 let bombStartPosition
+let laserPosition = playerStart
 const grid = document.querySelector('.grid')
 let displayLives = document.querySelector('#lives_remaining')
 let displayPoints = document.querySelector('#score')
 const startButton = document.querySelector('#start')
 const resetButton = document.querySelector('#reset')
-// let bombStarting = 0
-// let laserArray = []
-// let laserCell = ''
-// let laserPosition = playerStart
+
 
 // create grid
 for (let index = 0; index < width * width; index++) {
@@ -26,7 +26,6 @@ for (let index = 0; index < width * width; index++) {
   cells.push(cell)
   cell.innerHTML = index
   cell.style.width = `${100 / width}%`
-  // cell.setAttribute('id', `cell-${index}`)
 }
 
 // game starts when player clicks start button
@@ -39,15 +38,15 @@ startButton.addEventListener('click', () => {
   })
 
   aliensMove()
-  // randomBomb()
-  // startBomb()
+  bombAlignedToAlien()
+  bombsMove()
+  
 
   // when player clicks arrows to move
   document.addEventListener('keydown', (event) => {
     const key = event.key
 
     if (key === 'ArrowLeft' && !(playerStart % width === 0)) {
-      console.log('hello)')
       cells[playerStart].classList.remove('gun')
       playerStart -= 1
       cells[playerStart].classList.add('gun')
@@ -56,31 +55,14 @@ startButton.addEventListener('click', () => {
       playerStart += 1
       cells[playerStart].classList.add('gun')
     } else if (key === 'ArrowUp') {
-
-      // let laserPosition = playerStart - 20
-      // not currently working - review
-
-      // for (let i = 0; i < 20; i++) {
-      // const gridReference = document.getElementById(`cell-${laserPosition}`)
-      // setInterval((function turnOnLaser() {
-      //   gridReference.classList.add('laser')
-      //   console.log('here', gridReference)
-
-      // }), 2000)
-      // clearInterval()
-      // setInterval((function turnOffLaser() {
-      //   gridReference.classList.remove('laser')
-      //   console.log('this', gridReference)
-
-      // }), 5000)
-      // clearInterval()
-      // laserPosition = laserPosition - width
-      // }
+      laser()
     }
   })
 
   // if (displayLives.innerHTML === 0 || displayAliens[0] === 380) {
   //   gameOver()
+  // } else if (displayAliens.length === 0) {
+  //    player wins 
   // } else if (cells.classList.contains('bomb') && cells.classList.contains('playerStart')) {
   //   displayLives.innerHTML -= 1
   // } else if (cells.classList.contains('alien') && cells.classList.contains('laser')) {
@@ -88,6 +70,7 @@ startButton.addEventListener('click', () => {
   // }
 
   // when user clicks to restart game - needs updating, not currently working
+
   resetButton.addEventListener('click', () => {
 
     cells[playerStart].classList.remove('gun')
@@ -101,7 +84,6 @@ startButton.addEventListener('click', () => {
 function alienMovement() {
 
   removeAlienClass()
-
   if (direction === 1 && displayAliens[0] % width === 7) {
     direction = width
   } else if (direction === -1 & displayAliens[0] % width === 0) {
@@ -111,7 +93,6 @@ function alienMovement() {
   } else if (direction === width && displayAliens[0] % width === 0) {
     direction = 1
   }
-
   updateAlienClass()
 
 }
@@ -140,32 +121,37 @@ function aliensMove() {
 // function and interval to create bomb position
 function randomBomb() {
   const alienBomber = Math.floor(Math.random() * displayAliens.length)
-  const bombStartPosition = displayAliens[alienBomber] + 20
+  bombStartPosition = displayAliens[alienBomber] + 20
   cells[bombStartPosition].classList.add('bomb')
 
-  if (cells[bombStartPosition] > 399) {
-    clearInterval(initialBombPosition)
+}
+
+function bombAlignedToAlien() {
+  if (bombInitiated === false) {
+    setInterval(randomBomb, 3000)
   }
 }
 
-const initialBombPosition = setInterval(randomBomb, 2000)
-
-// function and interval for dropping bomb
-function startBomb() {
-  // not logging bombStartPosition. When added as a parameter, still not defined. 
-  console.log(bombStartPosition)
+function moveBomb() {
   cells[bombStartPosition].classList.remove('bomb')
   bombStartPosition += 20
   cells[bombStartPosition].classList.add('bomb')
+}
 
-  if (cells[bombStartPosition] > 399) {
-    clearInterval(bombDropping)
+function bombsMove() {
+  if (bombMoving === false) {
+    bombMoving = setInterval(moveBomb, 150)
   }
 }
 
-const bombDropping = setInterval(startBomb, 2100)
+function laser() {
+  cells[laserPosition].classList.remove('laser')
+  laserPosition -= 20
+  cells[laserPosition].classList.add('laser')
+}
+
+setInterval(laser, 100)
 
 function gameOver() {
   alert(`Game Over! Your final score was ${displayPoints}`)
 }
-
