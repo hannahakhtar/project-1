@@ -7,10 +7,10 @@ let direction = 1
 const aliensMoving = false
 const laserShot = false
 let bombMoving = false
-let bombInitiated = false
-let makeAliensMove = null
+const bombInitiated = false
+// const makeAliensMove = null
 let bombStartPosition
-let laserPosition = playerStart
+let laserPosition = 388
 const grid = document.querySelector('.grid')
 let displayLives = document.querySelector('#lives_remaining')
 let displayPoints = document.querySelector('#score')
@@ -33,6 +33,7 @@ startButton.addEventListener('click', () => {
 
   // starting position of player and aliens
   cells[playerStart].classList.add('gun')
+  cells[laserPosition].classList.add('laser')
   displayAliens.forEach(alien => {
     cells[alien].classList.add('alien')
   })
@@ -40,7 +41,7 @@ startButton.addEventListener('click', () => {
   aliensMove()
   bombAlignedToAlien()
   bombsMove()
-  
+
 
   // when player clicks arrows to move
   document.addEventListener('keydown', (event) => {
@@ -48,18 +49,33 @@ startButton.addEventListener('click', () => {
 
     if (key === 'ArrowLeft' && !(playerStart % width === 0)) {
       cells[playerStart].classList.remove('gun')
+      cells[laserPosition].classList.remove('laser')
       playerStart -= 1
+      laserPosition -= 1
       cells[playerStart].classList.add('gun')
+      cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowRight' && !(playerStart % width === width - 1)) {
       cells[playerStart].classList.remove('gun')
+      cells[laserPosition].classList.remove('laser')
       playerStart += 1
+      laserPosition += 1
       cells[playerStart].classList.add('gun')
+      cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowUp') {
-      laser()
+
+      setInterval(() => {
+        cells[laserPosition].classList.remove('laser')
+        if (laserPosition > 19) {
+          laserPosition -= 20
+          cells[laserPosition].classList.add('laser')
+        } else if (laserPosition > 19) {
+          cells[laserPosition].classList.remove('laser')
+        }
+      }, 100)
     }
   })
 
-  // if (displayLives.innerHTML === 0 || displayAliens[0] === 380) {
+  // if (displayLives.innerHTML === 0 || displayAliens[33] === 399) {
   //   gameOver()
   // } else if (displayAliens.length === 0) {
   //    player wins 
@@ -71,18 +87,17 @@ startButton.addEventListener('click', () => {
 
   // when user clicks to restart game - needs updating, not currently working
 
-  resetButton.addEventListener('click', () => {
+  // resetButton.addEventListener('click', () => {
 
-    cells[playerStart].classList.remove('gun')
-    displayAliens.forEach(alien => {
-      cells[alien].classList.remove('alien')
-    })
-  })
+  //   cells[playerStart].classList.remove('gun')
+  //   displayAliens.forEach(alien => {
+  //     cells[alien].classList.remove('alien')
+  //   })
+  // })
 })
 
 // direction is defined at start of game, so movement will begin by going right
 function alienMovement() {
-
   removeAlienClass()
   if (direction === 1 && displayAliens[0] % width === 7) {
     direction = width
@@ -94,7 +109,6 @@ function alienMovement() {
     direction = 1
   }
   updateAlienClass()
-
 }
 
 // when alien is in new position, remove class, move alien using alienMovement if statement
@@ -114,7 +128,7 @@ function updateAlienClass() {
 
 function aliensMove() {
   if (aliensMoving === false) {
-    makeAliensMove = setInterval(alienMovement, 500)
+    setInterval(alienMovement, 500)
   }
 }
 
@@ -123,7 +137,6 @@ function randomBomb() {
   const alienBomber = Math.floor(Math.random() * displayAliens.length)
   bombStartPosition = displayAliens[alienBomber] + 20
   cells[bombStartPosition].classList.add('bomb')
-
 }
 
 function bombAlignedToAlien() {
@@ -143,14 +156,6 @@ function bombsMove() {
     bombMoving = setInterval(moveBomb, 150)
   }
 }
-
-function laser() {
-  cells[laserPosition].classList.remove('laser')
-  laserPosition -= 20
-  cells[laserPosition].classList.add('laser')
-}
-
-setInterval(laser, 100)
 
 function gameOver() {
   alert(`Game Over! Your final score was ${displayPoints}`)

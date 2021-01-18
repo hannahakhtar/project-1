@@ -64,9 +64,8 @@ aside {
   font-size: 25px;
 }
 
-.alien {
-  background-color:blue;
-  background-size: contain;
+.laser {
+  background-color: orange;
 }
 
 .gun {
@@ -74,12 +73,11 @@ aside {
   background-size: contain;
 }
 
-.laser {
-  background-color: orange;
-}
-
 .bomb {
   background-color: purple;
 }
 
-
+.alien {
+  background-color:blue;
+  background-size: contain;
+}
