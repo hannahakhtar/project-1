@@ -5,7 +5,6 @@ let displayAliens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 21, 22, 23, 2
 let playerStart = 388
 let direction = 1
 const aliensMoving = false
-const laserShot = false
 let bombMoving = false
 const bombInitiated = false
 // const makeAliensMove = null
@@ -62,20 +61,16 @@ startButton.addEventListener('click', () => {
       cells[playerStart].classList.add('gun')
       cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowUp') {
-
+      let newLaserPos = laserPosition - 20
       setInterval(() => {
-        cells[laserPosition].classList.remove('laser')
-        if (laserPosition > 19) {
-          laserPosition -= 20
-          cells[laserPosition].classList.add('laser')
-        } else if (laserPosition > 19) {
-          cells[laserPosition].classList.remove('laser')
-        }
+        cells[newLaserPos].classList.remove('laser')
+        newLaserPos -= 20
+        cells[newLaserPos].classList.add('laser')
       }, 100)
     }
   })
 
-  // if (displayLives.innerHTML === 0 || displayAliens[33] === 399) {
+  // if (displayLives.innerHTML === 0 || displayAliens[] === 399) {
   //   gameOver()
   // } else if (displayAliens.length === 0) {
   //    player wins 
@@ -160,3 +155,14 @@ function bombsMove() {
 function gameOver() {
   alert(`Game Over! Your final score was ${displayPoints}`)
 }
+
+// when player clicks up
+
+
+
+let laserColumn = laserPosition - 20
+let columnArray = []
+for (let j = 0; j < width.length - 1; j++) {
+  columnArray.push(laserColumn - 20)
+}
+fr 
