@@ -10,32 +10,53 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* font-family: 'Alfa Slab One', cursive; */
+  /* background-image: url('../images/Space\ background.jpg');
+  object-fit: contain; */
 }
 
 header {
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: -20px;
+  margin-bottom: 50px;
  }
 
 main {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 #button_div {
-    margin: 10px;
+    margin: 2px;
+
 }
 
 button {
   padding: 10px;
   margin: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+button:hover {
+  background-color: lightblue;   
 }
 
 section {
   display: flex;
   flex-direction: column;
   align-content: space-around;
+}
+
+#lives_score {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 3px;
+  background-color: black;
+  color: white;
 }
 
 .grid {
@@ -45,18 +66,24 @@ section {
   width: 500px;
   height: 500px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  /* background-color: black; */
 }
 
 aside {
+  text-align: center;
+  display: inline;
   margin-left: 20px;
+}
+
+p {
+  padding: 4px;
 }
 
 .rules {
   border: 1px solid green;
   width: 200px;
   height: 400px;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .cell {
@@ -68,11 +95,6 @@ aside {
   background-color: orange;
 }
 
-.gun {
-  background-color: red;
-  background-size: contain;
-}
-
 .bomb {
   background-color: purple;
 }
@@ -81,3 +103,9 @@ aside {
   background-color:blue;
   background-size: contain;
 }
+
+.gun {
+  background-color: red;
+  background-size: contain;
+}
+

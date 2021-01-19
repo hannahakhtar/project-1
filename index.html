@@ -5,19 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Space Indavers</title>
   <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 </head>
 <body>
-
+  <header>
+    <h1>SPACE INVADERS!</h1>
+  </header>
   <main>
 
     <section>
 
-      <div id="button_div">
-        <button id="start">Start</button>
-        <button id="reset">Reset</button>
-      </div>
-
-      <div>
+      <div id=lives_score>
         <p>Lives: <span id="lives_remaining">3</span></p>
         <p>Score: <span id="score">0</span></p>
       </div>
@@ -29,8 +28,15 @@
 
     <aside>
 
+      <div id="button_div">
+        <button id="start">Start</button>
+      </div>
+
       <div class="rules">
-        <p>Area for rules</p>
+        <h3>Rules of Engagement</h3>
+        <p>Use the left and right arrows to move your gun and the up arrow to shoot. The aim is shoot all aliens.</p>
+        <p>If you are hit by a bomb, you will lose a life.</p>
+        <p>If you hit an alien with a laser, you will score 150 points.</p>
       </div>
 
     </aside>
