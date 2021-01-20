@@ -25,6 +25,7 @@ const grid = document.querySelector('.grid')
 const displayLives = document.querySelector('#lives_remaining')
 const displayPoints = document.querySelector('#score')
 const startButton = document.querySelector('#start')
+const resetButton = document.querySelector('#reset')
 
 // create grid
 for (let index = 0; index < width * width; index++) {
@@ -32,14 +33,12 @@ for (let index = 0; index < width * width; index++) {
   cell.classList.add('cell')
   grid.appendChild(cell)
   cells.push(cell)
-  // cell.innerHTML = index
   cell.style.width = `${100 / width}%`
 }
 
 
 // game starts when player clicks start button
 startButton.addEventListener('click', () => {
-
 
   // starting position of player and aliens
   cells[playerStart].classList.add('gun')
@@ -100,7 +99,7 @@ startButton.addEventListener('click', () => {
   })
 })
 
-// direction is defined at start of game, so movement will begin by going right
+// ! direction is defined at start of game, so movement will begin by going right
 function alienMovement() {
   removeAlienClass()
   if (direction === 1 && displayAliens[0] % width === 7) {
@@ -115,14 +114,14 @@ function alienMovement() {
   updateAlienClass()
 }
 
-// when alien is in new position, remove class, move alien using alienMovement if statement
+// ! when alien is in new position, remove class, move alien using alienMovement if statement
 function removeAlienClass() {
   displayAliens.forEach((alien) => {
     cells[alien].classList.remove('alien')
   })
 }
 
-// and then update the new position with updateAlienClass
+// ! and then update the new position with updateAlienClass
 function updateAlienClass() {
   displayAliens = displayAliens.map(alien => alien + direction)
   displayAliens.forEach((alien) => {
@@ -132,7 +131,7 @@ function updateAlienClass() {
 
 function aliensMove() {
   if (aliensMoving === false) {
-    setInterval(alienMovement, 500)
+    setInterval(alienMovement, 1000)
   }
 }
 
@@ -168,7 +167,7 @@ function checkCollision() {
     if (gameOver === true) {
       clearInterval(collisionCheck)
       gameEnded()
-      // ! this else if works, if the laser has been fired and is on the grid
+      // ! this else if statement works, if the laser has been fired and is on the grid
     } else if (cells[newLaserPos]) {
       for (let i = 0; i < width - 1; i++) {
         if (cells[i].classList.contains('laser')) {
@@ -180,7 +179,7 @@ function checkCollision() {
       }
       // 
       if (cells[playerStart].classList.contains('bomb') && bottomRow.some(cell => cells[cell].classList.contains('laser'))) {
- 
+
         console.log(livesUpdate)
         if (livesUpdate === 1) {
           livesUpdate -= 1
@@ -227,7 +226,6 @@ function checkCollision() {
         cells[newLaserPos].classList.remove('laser')
         bombMoving = false
         bombInitiated = false
-        // console.log('laser and bomb removed, so I work')
       }
 
       if (cells[newLaserPos].classList.contains('alien')) {
@@ -285,10 +283,17 @@ function checkCollision() {
 }
 
 function gameEnded() {
+  alert(`You lost! Your final score was ${scoreUpdate}`)
+  cells[playerStart].classList.remove('gun')
+  cells[laserPosition].classList.remove('laser')
+  cells[displayAliens].classList.remove('alien')
   clearInterval(bombOnMove)
   clearInterval(laserShot)
-  aliensMoving = true
+  aliensMoving = false
   bombInitiated = true
-  alert(`You lost! Your final score was ${scoreUpdate}`)
+
 }
 
+resetButton.addEventListener('click', () => {
+  location.reload()
+})
