@@ -10,15 +10,18 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* font-family: 'Alfa Slab One', cursive; */
-  /* background-image: url('../images/Space\ background.jpg');
-  object-fit: contain; */
+  background-image: url('../images/starry-night-sky.jpg');
+  font-family: 'Alfa Slab One', cursive;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header {
   text-align: center;
   margin-top: -20px;
   margin-bottom: 50px;
+  color: white;
  }
 
 main {
@@ -34,10 +37,11 @@ main {
 
 button {
   padding: 10px;
-  margin: 10px;
+  margin-bottom: 10px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 20px;
   outline: none;
+  width: 300px;
 }
 
 button:hover {
@@ -62,50 +66,57 @@ section {
 .grid {
   display: flex;
   flex-direction: row;
-  border: 1px solid green;
-  width: 500px;
-  height: 500px;
+  border: 1px solid white;
+  width: 600px;
+  height: 600px;
   flex-wrap: wrap;
-  /* background-color: black; */
+  background-color: black;
 }
 
 aside {
   text-align: center;
   display: inline;
-  margin-left: 20px;
+  margin-left: 25px;
+  color: white;
+}
+h3{
+  padding-top: 5px;
+  text-decoration: underline;
 }
 
 p {
-  padding: 4px;
+  padding: 10px;
 }
 
 .rules {
-  border: 1px solid green;
-  width: 200px;
-  height: 400px;
-  font-size: 20px;
+  border: 1px solid white;
+  width: 300px;
+  height: 450px;
+  font-size: 18px;
 }
 
 .cell {
-  border: 1px solid green;
+  /* border: 1px solid white; */
   font-size: 25px;
 }
 
 .laser {
-  background-color: orange;
+  background-image: url('../images/Laser.png');
+  background-size: contain;
 }
 
 .bomb {
-  background-color: purple;
+  background-image: url('../images/Bomb.png');
+  background-size: contain;
 }
 
 .alien {
-  background-color:blue;
+  background-image: url('../images/Alien.png');
   background-size: contain;
 }
 
 .gun {
-  background-color: red;
+  background-image: url('../images/Spaceship.png');
   background-size: contain;
 }
 
