@@ -66,7 +66,7 @@ startButton.addEventListener('click', () => {
     if (bombMoving === true) {
       moveBomb()
     }
-  }, 150)
+  }, 100)
 
   // when player clicks arrows to move
   document.addEventListener('keydown', (event) => {
