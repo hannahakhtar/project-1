@@ -28,14 +28,12 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  
 }
 
 #button_div {
   display: flex;
   flex-direction: column;
   margin: 2px;
-
 }
 
 button {
@@ -90,7 +88,7 @@ aside {
   color: white;
 }
 
-h3{
+h3 {
   padding: 10px;
   text-decoration: underline;
 }
@@ -134,12 +132,12 @@ p {
   background-repeat: no-repeat;
   background-size: cover;
   position: fixed;
-  left: 0;
-  top: 0;
   opacity: 0;
   visibility: hidden;
   transform: scale(1.1);
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  text-align: center;
+
 }
 
 .show_modal {
@@ -150,13 +148,18 @@ p {
 }
 
 .modal_score {
-  font-size: 40px;
+  margin: auto;
+  font-size: 60px;
   text-align: center;
   color: white;
+  margin-top: 250px;
+  margin-bottom: 50px;
 }
 
 .modal_button {
-  display: flex;
-  justify-content: center;
+  margin: auto;  
+  text-align: center;
+  font-size: 40px;
+  padding: 15px;
 }
 

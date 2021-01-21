@@ -47,7 +47,7 @@ for (let index = 0; index < width * width; index++) {
 // game starts when player clicks start button
 startButton.addEventListener('click', () => {
 
-  // audioPlayer.play()
+  audioPlayer.play()
 
   // starting position of player and aliens
   cells[playerStart].classList.add('gun')
@@ -87,19 +87,17 @@ startButton.addEventListener('click', () => {
       cells[playerStart].classList.add('gun')
       cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowUp') {
-      // audioPlayerShoots.play()
+      audioPlayerShoots.play()
       if (hasLaser === false) {
         hasLaser = true
         newLaserPos = laserPosition - 20
         if (newLaserPos > 19) {
           laserShot = setInterval(() => {
-            // console.log(newLaserPos, 'laser pos')
             cells[newLaserPos].classList.remove('laser')
             newLaserPos -= 20
             cells[newLaserPos].classList.add('laser')
           }, 80)
         } else if (newLaserPos <= 19) {
-          console.log('hello')
           clearInterval(laserShot)
           hasLaser = false
         }
@@ -175,7 +173,6 @@ function checkCollision() {
   const collisionCheck = setInterval(() => {
     if (gameOver === true) {
       clearInterval(collisionCheck)
-      gameEnded()
       // ! this else if statement works, if the laser has been fired and is on the grid
     } else if (cells[newLaserPos]) {
       for (let i = 0; i < width - 1; i++) {
@@ -186,7 +183,7 @@ function checkCollision() {
           newLaserPos = null
         }
       }
-      // 
+      
       if (cells[playerStart].classList.contains('bomb') && bottomRow.some(cell => cells[cell].classList.contains('laser'))) {
 
         console.log(livesUpdate)
@@ -209,13 +206,15 @@ function checkCollision() {
       }
 
       if (cells[playerStart].classList.contains('bomb')) {
-        // audioBombHits.play()
+        audioBombHits.play()
         if (livesUpdate === 1) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
           gameOver = true
           bombMoving = false
           bombInitiated = true
+          gameEnded()
+          modalText.innerHTML = `You lost! Your final score: ${scoreUpdate}`
         } else if (livesUpdate >= 2) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
@@ -237,7 +236,7 @@ function checkCollision() {
       }
 
       if (cells[newLaserPos].classList.contains('alien')) {
-        // audioAlienHit.play()
+        audioAlienHit.play()
         scoreUpdate += 150
         displayPoints.innerHTML = scoreUpdate
         hasLaser = false
@@ -245,10 +244,8 @@ function checkCollision() {
         const collision = displayAliens.indexOf(newLaserPos)
         displayAliens.splice(collision, 1)
         cells[newLaserPos].classList.remove('laser')
-        newLaserPos = null
         cells[newLaserPos].classList.remove('alien')
-
-        console.log('laser hits alien and score increases, so I work')
+        newLaserPos = null
       }
 
     } else if (bombStartPosition > 380 && !bombBottom) {
@@ -260,7 +257,7 @@ function checkCollision() {
       }, 100)
 
       if (cells[playerStart].classList.contains('bomb')) {
-        // audioBombHits.play()
+        audioBombHits.play()
 
         if (livesUpdate === 1) {
           livesUpdate -= 1
@@ -268,6 +265,8 @@ function checkCollision() {
           gameOver = true
           bombMoving = false
           bombInitiated = true
+          gameEnded()
+          modalText.innerHTML = `You lost! Your final score: ${scoreUpdate}`
 
         } else if (livesUpdate >= 2) {
           livesUpdate -= 1
@@ -279,32 +278,22 @@ function checkCollision() {
       }
     } else if (displayAliens.length === 0) {
       gameOver = true
-      modalText.innerHTML = `You win!! Your final score was ${scoreUpdate}`
+      gameEnded()
+      modalText.innerHTML = `You win! Your final score: ${scoreUpdate}`
       audioPlayer.pause()
 
     } else if (displayAliens[displayAliens.length - 1] >= 380) {
       gameEnded()
       gameOver = true
-
+      modalText.innerHTML = `You lost! Your final score: ${scoreUpdate}`
     }
   }, 1)
 }
 
 function gameEnded() {
-  // alert(`You lost! Your final score was ${scoreUpdate}`)
   gameEndedModal()
-  modalText.innerHTML = `You lost! Your final score was ${scoreUpdate}`
-  // console.log(displayAliens)
-  // aliensMoving = true
   audioPlayer.pause()
-  // audioPlayerDead.play()
-  // cells[playerStart].classList.remove('gun')
-  // cells[laserPosition].classList.remove('laser')
-  // cells[displayAliens].classList.remove('alien')
-  // cells[displayAliens].classList.remove('bomb')
-  // clearInterval(bombOnMove)
-  // clearInterval(laserShot)
-  // bombInitiated = true
+  audioPlayerDead.play()
 }
 
 function gameEndedModal() {
