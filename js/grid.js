@@ -26,6 +26,11 @@ const displayLives = document.querySelector('#lives_remaining')
 const displayPoints = document.querySelector('#score')
 const startButton = document.querySelector('#start')
 const resetButton = document.querySelector('#reset')
+const audioPlayer = document.querySelector('#backgroundMusic')
+const audioPlayerDead = document.querySelector('#playerDead')
+const audioPlayerShoots = document.querySelector('#playerShoots')
+const audioAlienHit = document.querySelector('#alienHit')
+
 
 // create grid
 for (let index = 0; index < width * width; index++) {
@@ -39,6 +44,8 @@ for (let index = 0; index < width * width; index++) {
 
 // game starts when player clicks start button
 startButton.addEventListener('click', () => {
+
+  audioPlayer.play()
 
   // starting position of player and aliens
   cells[playerStart].classList.add('gun')
@@ -78,7 +85,7 @@ startButton.addEventListener('click', () => {
       cells[playerStart].classList.add('gun')
       cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowUp') {
-      // work on this in AM
+      audioPlayerShoots.play()
       if (hasLaser === false) {
         hasLaser = true
         newLaserPos = laserPosition - 20
@@ -212,7 +219,6 @@ function checkCollision() {
           displayLives.innerHTML = livesUpdate
           console.log('yes')
           cells[playerStart].classList.remove('bomb')
-          // newLaserPos = 0
           bombMoving = true
           bombInitiated = false
           console.log('cleared')
@@ -229,6 +235,7 @@ function checkCollision() {
       }
 
       if (cells[newLaserPos].classList.contains('alien')) {
+        audioAlienHit.play()
         scoreUpdate += 150
         displayPoints.innerHTML = scoreUpdate
         hasLaser = false
@@ -273,6 +280,7 @@ function checkCollision() {
     } else if (displayAliens.length === 0) {
       gameOver = true
       alert(`You win!! Your final score was ${scoreUpdate}`)
+      audioPlayer.pause()
 
     } else if (displayAliens[displayAliens.length - 1] >= 380) {
       gameEnded()
@@ -283,13 +291,15 @@ function checkCollision() {
 }
 
 function gameEnded() {
+  audioPlayer.pause()
+  audioPlayerDead.play()
   alert(`You lost! Your final score was ${scoreUpdate}`)
   cells[playerStart].classList.remove('gun')
   cells[laserPosition].classList.remove('laser')
   cells[displayAliens].classList.remove('alien')
   clearInterval(bombOnMove)
   clearInterval(laserShot)
-  aliensMoving = false
+  aliensMoving = true
   bombInitiated = true
 
 }

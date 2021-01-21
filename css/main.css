@@ -47,7 +47,6 @@ button {
   font-weight: bold;
   color: white;
   background-color: Transparent;
-  
 }
 
 button:hover {
@@ -76,7 +75,11 @@ section {
   width: 600px;
   height: 600px;
   flex-wrap: wrap;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 5px;
+  box-shadow:
+    5px 5px 5px rgb(7, 22, 160),
+    -5px -5px 5px rgb(7, 22, 160);
 }
 
 aside {
