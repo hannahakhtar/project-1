@@ -27,6 +27,7 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   
 }
 
@@ -123,5 +124,39 @@ p {
 .gun {
   background-image: url('../images/Spaceship.png');
   background-size: contain;
+}
+
+.closing_modal {
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/paul-volkmer-qVotvbsuM_c-unsplash.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.show_modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal_score {
+  font-size: 40px;
+  text-align: center;
+  color: white;
+}
+
+.modal_button {
+  display: flex;
+  justify-content: center;
 }
 

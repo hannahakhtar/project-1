@@ -25,12 +25,14 @@ const grid = document.querySelector('.grid')
 const displayLives = document.querySelector('#lives_remaining')
 const displayPoints = document.querySelector('#score')
 const startButton = document.querySelector('#start')
-const resetButton = document.querySelector('#reset')
 const audioPlayer = document.querySelector('#backgroundMusic')
 const audioPlayerDead = document.querySelector('#playerDead')
 const audioPlayerShoots = document.querySelector('#playerShoots')
 const audioAlienHit = document.querySelector('#alienHit')
-
+const audioBombHits = document.querySelector('#bombHitsPlayer')
+const modal = document.querySelector('.closing_modal')
+const modalText = document.querySelector('.modal_score')
+const modalButton = document.querySelector('.modal_button')
 
 // create grid
 for (let index = 0; index < width * width; index++) {
@@ -45,7 +47,7 @@ for (let index = 0; index < width * width; index++) {
 // game starts when player clicks start button
 startButton.addEventListener('click', () => {
 
-  audioPlayer.play()
+  // audioPlayer.play()
 
   // starting position of player and aliens
   cells[playerStart].classList.add('gun')
@@ -85,7 +87,7 @@ startButton.addEventListener('click', () => {
       cells[playerStart].classList.add('gun')
       cells[laserPosition].classList.add('laser')
     } else if (key === 'ArrowUp') {
-      audioPlayerShoots.play()
+      // audioPlayerShoots.play()
       if (hasLaser === false) {
         hasLaser = true
         newLaserPos = laserPosition - 20
@@ -207,7 +209,7 @@ function checkCollision() {
       }
 
       if (cells[playerStart].classList.contains('bomb')) {
-
+        // audioBombHits.play()
         if (livesUpdate === 1) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
@@ -235,7 +237,7 @@ function checkCollision() {
       }
 
       if (cells[newLaserPos].classList.contains('alien')) {
-        audioAlienHit.play()
+        // audioAlienHit.play()
         scoreUpdate += 150
         displayPoints.innerHTML = scoreUpdate
         hasLaser = false
@@ -250,7 +252,6 @@ function checkCollision() {
       }
 
     } else if (bombStartPosition > 380 && !bombBottom) {
-      console.log('bombbottom')
       bombMoving = false
       bombInitiated = false
       bombBottom = true
@@ -259,6 +260,7 @@ function checkCollision() {
       }, 100)
 
       if (cells[playerStart].classList.contains('bomb')) {
+        // audioBombHits.play()
 
         if (livesUpdate === 1) {
           livesUpdate -= 1
@@ -270,40 +272,45 @@ function checkCollision() {
         } else if (livesUpdate >= 2) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
-          console.log('yes')
           cells[playerStart].classList.remove('bomb')
           bombMoving = true
           bombInitiated = false
-          console.log('cleared')
         }
       }
     } else if (displayAliens.length === 0) {
       gameOver = true
-      alert(`You win!! Your final score was ${scoreUpdate}`)
+      modalText.innerHTML = `You win!! Your final score was ${scoreUpdate}`
       audioPlayer.pause()
 
     } else if (displayAliens[displayAliens.length - 1] >= 380) {
       gameEnded()
-      gameOver === true
+      gameOver = true
 
     }
   }, 1)
 }
 
 function gameEnded() {
+  // alert(`You lost! Your final score was ${scoreUpdate}`)
+  gameEndedModal()
+  modalText.innerHTML = `You lost! Your final score was ${scoreUpdate}`
+  // console.log(displayAliens)
+  // aliensMoving = true
   audioPlayer.pause()
-  audioPlayerDead.play()
-  alert(`You lost! Your final score was ${scoreUpdate}`)
-  cells[playerStart].classList.remove('gun')
-  cells[laserPosition].classList.remove('laser')
-  cells[displayAliens].classList.remove('alien')
-  clearInterval(bombOnMove)
-  clearInterval(laserShot)
-  aliensMoving = true
-  bombInitiated = true
-
+  // audioPlayerDead.play()
+  // cells[playerStart].classList.remove('gun')
+  // cells[laserPosition].classList.remove('laser')
+  // cells[displayAliens].classList.remove('alien')
+  // cells[displayAliens].classList.remove('bomb')
+  // clearInterval(bombOnMove)
+  // clearInterval(laserShot)
+  // bombInitiated = true
 }
 
-resetButton.addEventListener('click', () => {
+function gameEndedModal() {
+  modal.classList.add('show_modal')
+}
+
+modalButton.addEventListener('click', () => {
   location.reload()
 })

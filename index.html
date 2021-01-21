@@ -28,7 +28,7 @@
 
       <div id="button_div">
         <button id="start">Start</button>
-        <button id="reset">Reset Game</button>
+        <!-- <button id="reset">Reset Game</button> -->
       </div>
 
       <div class="rules">
@@ -42,11 +42,18 @@
 
     </aside>
 
+    <div class="closing_modal">
+      <h1 class="modal_score"></h1>
+      <button class="modal_button">Play Again?</button>
+    </div>
+
+
   </main>
   <audio id="backgroundMusic" src="sounds/spaceinvaders1.mpeg"></audio>
   <audio id="playerDead" src="sounds/explosion.wav"></audio>
   <audio id="playerShoots" src="sounds/shoot.wav"></audio>
   <audio id="alienHit" src="sounds/invaderkilled.wav"></audio>
+  <audio id="bombHitsPlayer" src="sounds/Bombexplosion.wav"></audio>
   <script src="js/grid.js" defer></script>
 </body>
 </html>
