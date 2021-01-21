@@ -13,7 +13,6 @@ body {
   flex-direction: column;
   background-image: url('../images/Pbackground.jpg');
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -34,7 +33,6 @@ main {
 #button_div {
   display: flex;
   flex-direction: column;
-  margin: 2px;
 }
 
 button {
@@ -42,8 +40,7 @@ button {
   margin-bottom: 20px;
   border-color: white;
   border-radius: 8px;
-  font-size: 20px;
-  outline: none;
+  font-size: 25px;
   width: 300px;
   font-weight: bold;
   color: white;
@@ -106,10 +103,11 @@ p {
   border: 1px solid white;
   width: 300px;
   height: 530px;
-  font-size: 22px;
+  font-size: 20px;
   box-shadow:
   5px 5px 5px rgb(7, 22, 160),
   -5px -5px 5px rgb(7, 22, 160);
+  overflow: scroll;
 }
 
 .laser {
@@ -150,7 +148,6 @@ p {
   opacity: 1;
   visibility: visible;
   transform: scale(1.1);
-  /* transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; */
 }
 
 .modal_score {
