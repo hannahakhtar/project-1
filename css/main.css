@@ -107,7 +107,7 @@ p {
   box-shadow:
   5px 5px 5px rgb(7, 22, 160),
   -5px -5px 5px rgb(7, 22, 160);
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .laser {
