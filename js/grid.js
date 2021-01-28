@@ -1,26 +1,24 @@
 
-// variables
 const width = 20
 const cells = []
 let displayAliens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
 const bottomRow = [380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399]
 let playerStart = 388
 let direction = 1
-let aliensMoving = false
+const aliensMoving = false
 let bombMoving = false
 let bombInitiated = false
 let bombStartPosition
-let laserPosition = 388
+let rocketPosition = 388
 let scoreUpdate = 0
 let livesUpdate = 3
-let newLaserPos
+let newRocketPos
 let gameOver = true
-let laserShot
+let rocketShot
 let bombOnMove
-let hasLaser = false
+let hasRocket = false
 let bombBottom = false
 
-// DOM elements
 const grid = document.querySelector('.grid')
 const displayLives = document.querySelector('#lives_remaining')
 const displayPoints = document.querySelector('#score')
@@ -34,7 +32,6 @@ const modal = document.querySelector('.closing_modal')
 const modalText = document.querySelector('.modal_score')
 const modalButton = document.querySelector('.modal_button')
 
-// create grid
 for (let index = 0; index < width * width; index++) {
   const cell = document.createElement('div')
   cell.classList.add('cell')
@@ -43,15 +40,13 @@ for (let index = 0; index < width * width; index++) {
   cell.style.width = `${100 / width}%`
 }
 
-
-// game starts when player clicks start button
 startButton.addEventListener('click', () => {
 
   audioPlayer.play()
 
   // starting position of player and aliens
-  cells[playerStart].classList.add('gun')
-  cells[laserPosition].classList.add('laser')
+  cells[playerStart].classList.add('spaceship')
+  cells[rocketPosition].classList.add('rocket')
   displayAliens.forEach(alien => {
     cells[alien].classList.add('alien')
   })
@@ -68,45 +63,43 @@ startButton.addEventListener('click', () => {
     }
   }, 100)
 
-  // when player clicks arrows to move
   document.addEventListener('keydown', (event) => {
     const key = event.key
 
     if (key === 'ArrowLeft' && !(playerStart % width === 0)) {
-      cells[playerStart].classList.remove('gun')
-      cells[laserPosition].classList.remove('laser')
+      cells[playerStart].classList.remove('spaceship')
+      cells[rocketPosition].classList.remove('rocket')
       playerStart -= 1
-      laserPosition -= 1
-      cells[playerStart].classList.add('gun')
-      cells[laserPosition].classList.add('laser')
+      rocketPosition -= 1
+      cells[playerStart].classList.add('spaceship')
+      cells[rocketPosition].classList.add('rocket')
     } else if (key === 'ArrowRight' && !(playerStart % width === width - 1)) {
-      cells[playerStart].classList.remove('gun')
-      cells[laserPosition].classList.remove('laser')
+      cells[playerStart].classList.remove('spaceship')
+      cells[rocketPosition].classList.remove('rocket')
       playerStart += 1
-      laserPosition += 1
-      cells[playerStart].classList.add('gun')
-      cells[laserPosition].classList.add('laser')
+      rocketPosition += 1
+      cells[playerStart].classList.add('spaceship')
+      cells[rocketPosition].classList.add('rocket')
     } else if (key === 'ArrowUp') {
       audioPlayerShoots.play()
-      if (hasLaser === false) {
-        hasLaser = true
-        newLaserPos = laserPosition - 20
-        if (newLaserPos > 19) {
-          laserShot = setInterval(() => {
-            cells[newLaserPos].classList.remove('laser')
-            newLaserPos -= 20
-            cells[newLaserPos].classList.add('laser')
+      if (hasRocket === false) {
+        hasRocket = true
+        newRocketPos = rocketPosition - 20
+        if (newRocketPos > 19) {
+          rocketShot = setInterval(() => {
+            cells[newRocketPos].classList.remove('rocket')
+            newRocketPos -= 20
+            cells[newRocketPos].classList.add('rocket')
           }, 80)
-        } else if (newLaserPos <= 19) {
-          clearInterval(laserShot)
-          hasLaser = false
+        } else if (newRocketPos <= 19) {
+          clearInterval(rocketShot)
+          hasRocket = false
         }
       }
     }
   })
 })
 
-// ! direction is defined at start of game, so movement will begin by going right
 function alienMovement() {
   removeAlienClass()
   if (direction === 1 && displayAliens[0] % width === 7) {
@@ -121,14 +114,12 @@ function alienMovement() {
   updateAlienClass()
 }
 
-// ! when alien is in new position, remove class, move alien using alienMovement if statement
 function removeAlienClass() {
   displayAliens.forEach((alien) => {
     cells[alien].classList.remove('alien')
   })
 }
 
-// ! and then update the new position with updateAlienClass
 function updateAlienClass() {
   displayAliens = displayAliens.map(alien => alien + direction)
   displayAliens.forEach((alien) => {
@@ -161,7 +152,6 @@ function bombAlignedToAlien() {
 }
 
 function moveBomb() {
-  // console.log(bombStartPosition)
   if (cells[bombStartPosition]) {
     cells[bombStartPosition].classList.remove('bomb')
     bombStartPosition += 20
@@ -173,20 +163,19 @@ function checkCollision() {
   const collisionCheck = setInterval(() => {
     if (gameOver === true) {
       clearInterval(collisionCheck)
-      // ! this else if statement works, if the laser has been fired and is on the grid
-    } else if (cells[newLaserPos]) {
+      // ! this else if statement works, if the rocket has been fired and is currently on the grid
+    } else if (cells[newRocketPos]) {
       for (let i = 0; i < width - 1; i++) {
-        if (cells[i].classList.contains('laser')) {
-          hasLaser = false
-          clearInterval(laserShot)
-          cells[newLaserPos].classList.remove('laser')
-          newLaserPos = null
+        if (cells[i].classList.contains('rocket')) {
+          hasRocket = false
+          clearInterval(rocketShot)
+          cells[newRocketPos].classList.remove('rocket')
+          newRocketPos = null
         }
       }
       
-      if (cells[playerStart].classList.contains('bomb') && bottomRow.some(cell => cells[cell].classList.contains('laser'))) {
+      if (cells[playerStart].classList.contains('bomb') && bottomRow.some(cell => cells[cell].classList.contains('rocket'))) {
 
-        console.log(livesUpdate)
         if (livesUpdate === 1) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
@@ -196,12 +185,9 @@ function checkCollision() {
         } else if (livesUpdate >= 2) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
-          console.log('yes')
           cells[playerStart].classList.remove('bomb')
-          // newLaserPos = 0
           bombMoving = true
           bombInitiated = false
-          console.log('cleared')
         }
       }
 
@@ -218,34 +204,32 @@ function checkCollision() {
         } else if (livesUpdate >= 2) {
           livesUpdate -= 1
           displayLives.innerHTML = livesUpdate
-          console.log('yes')
           cells[playerStart].classList.remove('bomb')
           bombMoving = true
           bombInitiated = false
-          console.log('cleared')
         }
       }
 
-      if (cells[newLaserPos].classList.contains('bomb')) {
-        hasLaser = false
-        clearInterval(laserShot)
-        cells[newLaserPos].classList.remove('bomb')
-        cells[newLaserPos].classList.remove('laser')
+      if (cells[newRocketPos].classList.contains('bomb')) {
+        hasRocket = false
+        clearInterval(rocketShot)
+        cells[newRocketPos].classList.remove('bomb')
+        cells[newRocketPos].classList.remove('rocket')
         bombMoving = false
         bombInitiated = false
       }
 
-      if (cells[newLaserPos].classList.contains('alien')) {
+      if (cells[newRocketPos].classList.contains('alien')) {
         audioAlienHit.play()
         scoreUpdate += 150
         displayPoints.innerHTML = scoreUpdate
-        hasLaser = false
-        clearInterval(laserShot)
-        const collision = displayAliens.indexOf(newLaserPos)
+        hasRocket = false
+        clearInterval(rocketShot)
+        const collision = displayAliens.indexOf(newRocketPos)
         displayAliens.splice(collision, 1)
-        cells[newLaserPos].classList.remove('laser')
-        cells[newLaserPos].classList.remove('alien')
-        newLaserPos = null
+        cells[newRocketPos].classList.remove('rocket')
+        cells[newRocketPos].classList.remove('alien')
+        newRocketPos = null
       }
 
     } else if (bombStartPosition > 380 && !bombBottom) {

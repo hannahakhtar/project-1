@@ -110,7 +110,7 @@ p {
   overflow-y: auto;
 }
 
-.laser {
+.rocket {
   background-image: url('../images/Laser.png');
   background-size: contain;
 }
@@ -125,7 +125,7 @@ p {
   background-size: contain;
 }
 
-.gun {
+.spaceship {
   background-image: url('../images/Spaceship.png');
   background-size: contain;
 }
@@ -140,14 +140,12 @@ p {
   opacity: 0;
   visibility: hidden;
   transform: scale(1.1);
-  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
   text-align: center;
 }
 
 .show_modal {
   opacity: 1;
   visibility: visible;
-  transform: scale(1.1);
 }
 
 .modal_score {
@@ -155,7 +153,7 @@ p {
   font-size: 60px;
   text-align: center;
   color: white;
-  margin-top: 250px;
+  margin-top: 400px;
   margin-bottom: 50px;
 }
 
