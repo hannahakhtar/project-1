@@ -4,9 +4,9 @@
 
 ## Overview
 
-For the first project on the Software Engineering Immersive at General Assembly, I was tasked with building an arcade game within seven days. We were to apply the knowldege amassed over our first three weeks in order to do this.
+For the first project on the Software Engineering Immersive at General Assembly, I was tasked with building an arcade game in seven days, applying the knowldege amassed over our first three weeks to do this.
 
-The game was deloyed via GitHub Pages and is currently available to played on desktop with a keyboard.
+The game was deloyed via GitHub Pages and is currently available to be played on a desktop with a keyboard.
 
 [Play the game here!](https://hannahakhtar.github.io/project-1/)
 
@@ -18,17 +18,17 @@ The game was deloyed via GitHub Pages and is currently available to played on de
 - The player should be able to clear at least one wave of the aliens
 - The player's score should be displayed at the end of the game
 - Use KISS (Keep It Simple Stupid) and DRY (Don't Repeat Yourself) principles
-- Adhere to best practices and use semantic markup for HTML and
+- Adhere to best practices and use semantic markup for HTML and CSS
 - Use JavaScript for DOM manipulation
 
 ## Space Invaders Brief 
 
 - The player aims to shoot and kill all the aliens before they reach the planet's surface.
-- If the player hits an alien with the rocket, the alien will disappear and the player will get 150   points. 
-- The player can move left and right only along the bottom row.
+- If the player hits an alien with the rocket, the alien will disappear and the player will get 150 points. 
+- The player can move the spaceship along the bottom row.
 - The aliens move left and right and will move down each time the reach the side of the screen.
 - Aliens will drop bombs periodically and if they hit the player, they will lose a life.
-- The aim is to achieve the highest score possible before the alien's bombs kill you or if they reach the planet (bottom of the grid).
+- The aim is to kill all aliens and achieve the highest score before the alien's bombs kill you or if they reach the planet (bottom of the grid).
 
 ## Technogies Used
 
@@ -41,7 +41,7 @@ The game was deloyed via GitHub Pages and is currently available to played on de
 
 ### The Grid
 
-The grid for the game was built using JavaScript and DOM manipulation. Using a for loop, HTML divs were created and appended as children to the parent div, which had a class of grid. An array was also created, called cells, which would be used throughout the game creation.
+The grid for the game was built using JavaScript and DOM manipulation. Using a for loop, HTML divs were created and appended as children to the parent div, which had a class of grid. An array called cells was created, which was used throughout the game creation.
 
  ``` js
  for (let index = 0; index < width * width; index++) {
@@ -55,9 +55,9 @@ The grid for the game was built using JavaScript and DOM manipulation. Using a f
 
 ### Alien Movement
 
-The initial of the aliens were determined by creating an array and hard coding the index of the start position it related to within the cells array.
+The alien starting position were determined by creating an array and hard coding the index of the start position it related to within the cells array.
 
-Direction was set using a global variable (let direction = 1) and the function alienMovement determined whether the aliens were to move left or right; if the aliens were at the left of the grid, they were to move right, and vice versa. If the aliens had reached the edge of the grid, they moved down a column, which was determined by direction equalling the value of the width (20).
+Direction was set using a global variable (let direction = 1) and the function alienMovement determined whether the aliens were to move left or right. The modulus operator was used to detemine if the aliens had reached either side of the grid and which way they were to move next (down and then left or right).
 
 ```js
 function alienMovement() {
@@ -88,7 +88,7 @@ function updateAlienClass() {
 }
 ```
 
-The aliensMove function udpated the position of the aliens every second, so that they would move across the board. This function was invoked within the startButton event listener, so the aliens would begin to move across the grid as the player pressed start.
+The aliensMove function updated the position of the aliens every second, so that they would move across the board. This function was invoked within the startButton event listener so the movement would begin once the player pressed the start button.
 
 ```js
 function aliensMove() {
@@ -100,7 +100,7 @@ function aliensMove() {
 
 ### Bomb release and movement
 
-To create the illusion of the aliens dropping a bomb, I firstly created the function randomBomb to determine where the bomb would be dropped from. Using the Math.random and Math.floor methods were used on the displayAlien array to calculate the initial position of the bomb and then the classList was added to the index below that of the initial position. Variables were then updated accordingly, which would impact when other functions were invoked.
+To create the illusion of the aliens dropping a bomb, I firstly created the function randomBomb to determine where the bomb would be dropped from. The Math.random and Math.floor methods were used on the displayAlien array to calculate the initial position of the bomb and then the classList was added to the index below that of the initial position. Variables were then updated accordingly, which would impact when other functions were invoked.
 
 ```js
 function randomBomb() {
@@ -113,7 +113,7 @@ function randomBomb() {
 }
 ```
 
-The interval within the below function indicates that the randomBomb function was invoked every 2.5 seconds. In hindsight, this interval did not have to be nested within a function.
+The interval within the randomBomb function determines that the function was invoked every 2.5 seconds. In hindsight, this interval did not have to be nested within a function.
 
 ```js
 function bombAlignedToAlien() {
@@ -124,7 +124,7 @@ function bombAlignedToAlien() {
   }, 2500)
 }
 ```
-In order for the bomb to move down the grid, the classList was removed from the bombStartPosition, reassigned and then added to the bombStartPosition below. The interval bombOnMove determined that moveBomb function would be evaluated every 100 milliseconds.
+In order for the bomb to move down the grid, the classList was removed from the bombStartPosition, reassigned and then added to the bombStartPosition below. The interval bombOnMove determined that moveBomb function would be evaluated every 100ms.
 
 ```js
 function moveBomb() {
@@ -144,15 +144,15 @@ function moveBomb() {
 
 ### Player movement and shooting the rocket
 
-Within the startButton event listener, there was a further event listener which would track the when the player clicked the up, left and right buttons.
+Within the startButton event listener, there was a nested event listener which would tlisten for the player clicking the up, left and right buttons.
 
-The player uses the left and right arrows to move across the grid with boundaries set at the end of the grid, so that the spaceship is not able to move through the walls.
+The player uses the left and right arrows to move the spaceship across the grid with boundaries set at the end of the grid to stop movement beyond the edge of the grid.
 
 The up arrow is used to shoot the rocket towards the aliens and the movement of the rocket is achieved with the rocketShot set inteval nested within the if statement.
 
-I initially encoutered a bug if the rocket reached the top of the grid, as I was unable to then reset the position of the laser to be shot again. This was fixed by using an if else statement to reset the rocket position (based on the initial rocketPosition) if the newRocketPos was in the top column of the grid.
+I initially encoutered a bug should the rocket reach the top of the grid as I was unable to then reset the position of the laser to be shot again. This was fixed by using an if else statement to reset the rocket position (based on the initial rocketPosition) if the newRocketPos was in the top column of the grid.
 
-The rocket was 'hidden' behind the player at all times, which was achieved by using CSS specificity.
+The rocket was hidden behind the player at all times, which was achieved by using CSS specificity.
 
 ``` js
   document.addEventListener('keydown', (event) => {
@@ -204,7 +204,7 @@ If the global variable, gameOver, was set to true, the interval would be cleared
       clearInterval(collisionCheck)
 ```      
 
-#### Restricting player to having one rocket on the grid at a time
+### Restricting player to having one rocket on the grid at a time
 
 Should the gameOver variable be false, the interval would continue to run.
 
@@ -222,9 +222,9 @@ else if (cells[newRocketPos]) {
       }
 ```    
 
-#### Player and bomb collision
+### Player and bomb collision
 
-The if statements below were nested in the above else if statement. I had to check for two varients; firstly if the player position and the bomb were in the same cell, but also if the laser was on the bottom row. Before this was taken into consideration, the lives were not reducing when the class for laser, the player and the bomb were all aligned to the same cell.
+The if statements below were nested in the above else if statement. I had to check for two variants; firstly if the player position and the bomb were in the same cell, and also if the laser was on the bottom row. Before this was taken into consideration, the lives were not reducing when the class for laser, the player and the bomb were all aligned to the same cell.
 
 Additionally, if statements were nested in both conditions to check the number of lives remaining, and actioned accordingly.
 
@@ -266,9 +266,9 @@ Additionally, if statements were nested in both conditions to check the number o
       }
 ```
 
-#### Rocket and bomb collision
+### Rocket and bomb collision
 
-On the occasion that a rocket and bomb collided, the below if statement (within the collisionCheck function) was triggered. This reset various global variables to their initial state, so that new bombs would be created and dropped and the player could then also fire another rocket.
+Should a rocket and bomb collide, the below if statement (within the collisionCheck function) was triggered. This reset various global variables to their initial state, so that new bombs would be created and dropped and the player could then also fire another rocket.
 
 ```js
 if (cells[newRocketPos].classList.contains('bomb')) {
@@ -281,9 +281,9 @@ if (cells[newRocketPos].classList.contains('bomb')) {
       }
 ```
 
-#### Alien and rocket collision
+### Alien and rocket collision
 
-If the player shot the rocket and it hit an alien, the below if statement updated the score, reset variables and used indexOf and splice to remove the alien hit from the displayAlien array.
+If a rocket hits an alien, the below if statement updated the score, reset variables and used indexOf and splice to remove the alien hit from the displayAlien array.
 
 ```js
       if (cells[newRocketPos].classList.contains('alien')) {
@@ -300,9 +300,9 @@ If the player shot the rocket and it hit an alien, the below if statement update
       }
 ```
 
-#### Bomb reaching bottom of grid
+### Bomb reaching bottom of grid
 
-Initially, the bomb class was not being removed when this reached the bottom of the grid. To fix this bug, the below setTimeout was created to remove the class, should it reach the bottom. The same logic was included to update lives or end the game, if required.
+Initially, the bomb class was not being removed when the bomb reached the bottom of the grid. To fix this bug, the below setTimeout was created to remove the class, should it reach the bottom. The same logic was included to update lives or end the game, if required.
 
 ```js
 else if (bombStartPosition > 380 && !bombBottom) {
@@ -336,9 +336,9 @@ else if (bombStartPosition > 380 && !bombBottom) {
     }
 ```
 
-#### Final score, win/lost and restart game
+### Final score, win/lost and restart game
 
-Once the collision checks were completed and either the player won or lost, the final score and outcome would be displayed by manipulating the modalText inner HTML.
+Once the collision checks were complete and the player won or lost the game, the final score and outcome are displayed by manipulating the modalText inner HTML.
 
 ```js
 modalText.innerHTML = `You lost! Your final score: ${scoreUpdate}`
@@ -371,22 +371,23 @@ There was also a button which allowed the player to play again. Location reload 
 
 ## Victories
 
-- This was my first project and I am extremely proud to have a working game and more confidence in my coding abiltiies.
-- Whilst the initial stages of the project were tough, I was able to debug a number of bugs on my own, which is a new skill for me.
+- As this was my first project, I am extremely proud to have a working game and more confidence in my coding abiltiies.
+- Whilst the initial stages of the project were tough, I was able to debug on my own, which is a new skill for me.
 
 ## Challenges and lessons learned 
 
-- I spent the first day planning and writing my pseudocode but I found that during the project, I had to add additional functions that I did not plan for, which added to the complexity and repetition of code. This has highlighted the importance of planning and reviewing edge cases before starting coding.
-- As this was my first project, I have gained knowledge in using multiple setIntervals. It was a challenge to ensure that all intervals were 'caught', which is why the collision check was set to 1ms, ensuring ensure that I would be able to check for collisions constantly.
+- I spent the first day planning and writing pseudocode but I found that during the project, I had to add additional functions that I did not plan for, which added to the complexity and repetition of code. This has highlighted the importance of planning and reviewing edge cases before starting coding.
+- As this was my first project, I have gained knowledge in using multiple setIntervals. It was a challenge to ensure that all intervals were 'caught', which is why the collision check was set to 1ms, ensuring that I would be able to check for collisions regularly.
 - The value in using console.log; using this was extremely useful to understand what was being called at certain points with the code, which helped with debugging.
 
 ## Future feature ideas
 
-- Mobile responsive
-- Utilise local storage for persistent high scores
-- Allow players to shoot the rocket more often
+- Mobile responsive.
+- Utilise local storage for persistent high scores.
+- Improve functionality to allow player to shoot the rocket more often.
 - Levels to make the game harder each time the player clears a wave; aliens move faster etc.
-- Refactor code - having only just finished the game, I am already aware of the benefits of refactoring my code to make it DRY. Having run into bugs due to how my code was written and the use of my event listeners, I plan to redo this game at the end of the course to see the progression I have made.
+- Toggle to choose whether to have sound on or off.
+- Refactor code - having only just finished the game, I am already aware of the benefits of refactoring my code to make it DRY. Having run into bugs due to how my code was written and the use of my event listeners, I plan to redo the game at the end of the course to see the progression I have made.
 
 ## Image and sound credit
 
